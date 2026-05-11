@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOCFL Daily</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="phone-shell" aria-label="TOCFL Daily mobile MVP">
+    <section class="screen active" id="home-screen" data-screen="home">
+      <header class="home-hero">
+        <div class="brand-row">
+          <div>
+            <p class="kicker" data-i18n="home.kicker">Nhiệm vụ hôm nay</p>
+            <h1>TOCFL Daily</h1>
+            <p class="subtitle" data-i18n="home.subtitle">Học từ vựng tiếng Trung phồn thể mỗi ngày</p>
+          </div>
+          <button class="language-toggle" id="language-toggle" type="button" aria-label="Developer language toggle">中文 / Tiếng Việt</button>
+        </div>
+
+        <article class="mission-card">
+          <div class="mission-copy">
+            <span class="mission-label" data-i18n="home.goalLabel">Mục tiêu hôm nay</span>
+            <strong data-i18n="home.goal">6 từ mới hôm nay</strong>
+            <span data-i18n="home.goalHint">Hoàn thành một vòng học nhanh trước khi đi học hoặc đi làm.</span>
+          </div>
+          <div class="mission-count">
+            <span id="home-progress-count">0/6</span>
+            <small data-i18n="home.done">đã xong</small>
+          </div>
+          <div class="home-progress" aria-label="0 trên 6 từ">
+            <span></span>
+          </div>
+        </article>
+      </header>
+
+      <section class="today-strip" aria-label="Daily learning status">
+        <article>
+          <span data-i18n="home.exam">Đến TOCFL A2</span>
+          <strong data-i18n="home.examDays">74 ngày</strong>
+        </article>
+        <article>
+          <span data-i18n="home.streak">Chuỗi học</span>
+          <strong data-i18n="home.streakDays">3 ngày</strong>
+        </article>
+      </section>
+
+      <button class="start-button" data-tab-target="preview" type="button">
+        <span data-i18n="home.start">Bắt đầu học hôm nay</span>
+        <b>›</b>
+      </button>
+
+      <section class="quick-entry-grid">
+        <button class="entry-card" data-tab-target="preview" type="button">
+          <span class="entry-icon">01</span>
+          <strong data-i18n="home.preview">Xem nhanh</strong>
+          <small data-i18n="home.previewHint">Nhìn 6 từ mới</small>
+        </button>
+        <button class="entry-card" data-tab-target="flashcards" type="button">
+          <span class="entry-icon">02</span>
+          <strong data-i18n="home.cards">Thẻ nhớ</strong>
+          <small data-i18n="home.cardsHint">Lật thẻ ôn tập</small>
+        </button>
+        <button class="entry-card" data-tab-target="quiz" type="button">
+          <span class="entry-icon">03</span>
+          <strong data-i18n="home.quiz">Kiểm tra</strong>
+          <small data-i18n="home.quizHint">3 câu chọn đáp án</small>
+        </button>
+      </section>
+
+      <section class="daily-words">
+        <div class="section-title">
+          <div>
+            <p class="kicker" data-i18n="home.wordsKicker">Từ gợi ý</p>
+            <h2 data-i18n="home.wordsTitle">6 từ dùng ở Đài Loan</h2>
+          </div>
+          <span>A1-B1</span>
+        </div>
+        <div class="word-pill-list" id="home-word-list"></div>
+      </section>
+    </section>
+
+    <section class="screen" id="preview-screen" data-screen="preview">
+      <header class="screen-header">
+        <button class="back-home" data-tab-target="home" type="button" aria-label="Back home">‹</button>
+        <div>
+          <p class="kicker">Quick Preview</p>
+          <h2 data-i18n="preview.title">Từ mới hôm nay</h2>
+        </div>
+        <span class="step-counter" id="preview-counter">1 / 6</span>
+      </header>
+
+      <article class="word-card preview-card">
+        <div class="image-stage">
+          <img id="preview-image" alt="">
+          <span>AI image placeholder</span>
+        </div>
+        <div class="tag-row">
+          <span class="level-tag" id="preview-level">A1</span>
+          <span class="topic-tag" id="preview-topic">醫療</span>
+        </div>
+        <h3 class="zh-word" id="preview-word">醫院</h3>
+        <p class="pinyin" id="preview-pinyin">yī yuàn</p>
+        <p class="meaning-badge" id="preview-meaning">bệnh viện</p>
+        <div class="audio-row">
+          <button class="audio-button" type="button"><span>🔊</span><b data-i18n="preview.wordAudio">Nghe từ</b></button>
+          <button class="audio-button" type="button"><span>🔊</span><b data-i18n="preview.sentenceAudio">Nghe câu</b></button>
+        </div>
+        <div class="example-panel">
+          <p class="example-zh" id="preview-example-zh"></p>
+          <p class="example-vi" id="preview-example-vi"></p>
+        </div>
+      </article>
+
+      <div class="sticky-actions two">
+        <button class="soft-button" id="known-btn" type="button" data-i18n="preview.known">Tôi đã biết</button>
+        <button class="solid-button" id="want-learn-btn" type="button" data-i18n="preview.learn">Tôi muốn học</button>
+      </div>
+
+      <div class="pager-actions">
+        <button class="text-button" id="preview-prev" type="button" data-i18n="common.prev">Trước</button>
+        <button class="text-button" id="preview-next" type="button" data-i18n="common.next">Tiếp</button>
+      </div>
+    </section>
+
+    <section class="screen" id="flashcards-screen" data-screen="flashcards">
+      <header class="screen-header">
+        <button class="back-home" data-tab-target="home" type="button" aria-label="Back home">‹</button>
+        <div>
+          <p class="kicker">Flashcards</p>
+          <h2 data-i18n="cards.title">Luyện thẻ nhớ</h2>
+        </div>
+        <span class="step-counter" id="flash-counter">1 / 6</span>
+      </header>
+
+      <div class="thin-progress" aria-label="Flashcard progress">
+        <span id="flash-progress"></span>
+      </div>
+
+      <button class="flip-card" id="flash-card" type="button" aria-label="Flip flashcard">
+        <div class="flip-card-inner">
+          <article class="flip-face flip-front">
+            <div class="image-stage compact">
+              <img id="flash-image" alt="">
+              <span>AI image placeholder</span>
+            </div>
+            <h3 class="zh-word" id="flash-word">醫院</h3>
+            <p class="pinyin" id="flash-pinyin">yī yuàn</p>
+            <span class="round-audio">🔊</span>
+            <p class="card-hint" data-i18n="cards.tapHint">Nhấn để xem nghĩa</p>
+          </article>
+          <article class="flip-face flip-back">
+            <p class="meaning-badge large" id="flash-meaning">bệnh viện</p>
+            <p class="example-zh" id="flash-example-zh"></p>
+            <p class="example-vi" id="flash-example-vi"></p>
+            <div class="tag-row centered">
+              <span class="level-tag" id="flash-level">A1</span>
+              <span class="topic-tag" id="flash-topic">醫療</span>
+            </div>
+            <span class="round-audio wide">🔊 <b data-i18n="cards.sentenceAudio">Nghe câu</b></span>
+          </article>
+        </div>
+      </button>
+
+      <p class="completion-message" id="flash-complete" hidden data-i18n="cards.complete">Hoàn thành vòng flashcard</p>
+
+      <div class="memory-actions">
+        <button class="memory-bad" data-memory="0" type="button" data-i18n="cards.bad">Không biết</button>
+        <button class="memory-mid" data-memory="1" type="button" data-i18n="cards.mid">Chưa chắc</button>
+        <button class="memory-good" data-memory="2" type="button" data-i18n="cards.good">Đúng rồi</button>
+      </div>
+    </section>
+
+    <section class="screen" id="quiz-screen" data-screen="quiz">
+      <header class="screen-header">
+        <button class="back-home" data-tab-target="home" type="button" aria-label="Back home">‹</button>
+        <div>
+          <p class="kicker">Quiz</p>
+          <h2 data-i18n="quiz.title">Chọn đáp án đúng</h2>
+        </div>
+        <span class="step-counter" id="quiz-score">0 điểm</span>
+      </header>
+
+      <article class="quiz-card">
+        <p class="quiz-number" id="quiz-number">Câu 1 / 3</p>
+        <h3 id="quiz-question">我今天要去＿＿看病。</h3>
+        <div class="quiz-options" id="quiz-options"></div>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <button class="solid-button full" id="quiz-next" type="button" data-i18n="quiz.next">Câu tiếp theo</button>
+      </article>
+
+      <article class="quiz-result" id="quiz-result" hidden>
+        <span class="result-mark">✓</span>
+        <h3 data-i18n="quiz.resultTitle">Kết quả hôm nay</h3>
+        <p id="quiz-result-text">Bạn đã trả lời đúng 0 / 3 câu</p>
+        <div class="result-actions">
+          <button class="soft-button" id="quiz-home" data-tab-target="home" type="button" data-i18n="quiz.home">Về trang chủ</button>
+          <button class="solid-button" id="quiz-restart" type="button" data-i18n="quiz.restart">Luyện lại</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="screen" id="progress-screen" data-screen="progress">
+      <header class="screen-header">
+        <button class="back-home" data-tab-target="home" type="button" aria-label="Back home">‹</button>
+        <div>
+          <p class="kicker">Progress</p>
+          <h2 data-i18n="progress.title">Tiến độ học</h2>
+        </div>
+      </header>
+
+      <section class="progress-hero">
+        <div>
+          <span data-i18n="progress.targetLabel">Mục tiêu cấp độ</span>
+          <strong>A2</strong>
+        </div>
+        <div class="days-left">
+          <strong>74</strong>
+          <span data-i18n="progress.daysUnit">ngày</span>
+        </div>
+      </section>
+
+      <section class="metric-list">
+        <article><span data-i18n="progress.examDate">Ngày thi</span><strong>2026/07/25</strong></article>
+        <article><span data-i18n="progress.learned">Đã học</span><strong>0 / 800</strong></article>
+        <article><span data-i18n="progress.todayRate">Hoàn thành hôm nay</span><strong>0%</strong></article>
+        <article><span data-i18n="progress.hardWords">Từ khó</span><strong>0</strong></article>
+        <article><span data-i18n="progress.quizRate">Đúng quiz</span><strong id="progress-quiz-rate">Chưa kiểm tra</strong></article>
+        <article><span data-i18n="progress.dailyAdvice">Gợi ý mỗi ngày</span><strong data-i18n="progress.dailyAdviceValue">12 từ mới</strong></article>
+      </section>
+
+      <section class="settings-card">
+        <h3 data-i18n="progress.settings">Cài đặt học tập</h3>
+        <label>
+          <span data-i18n="progress.levelSelect">Mục tiêu cấp độ</span>
+          <select>
+            <option>A1</option>
+            <option selected>A2</option>
+            <option>B1</option>
+            <option>B2</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="progress.dailySelect">Số từ mỗi ngày</span>
+          <select>
+            <option selected>6</option>
+            <option>10</option>
+            <option>12</option>
+            <option>15</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="progress.speedSelect">Tốc độ phát âm</span>
+          <select id="speed-select">
+            <option value="slow" data-i18n="progress.slow">Chậm</option>
+            <option value="normal" selected data-i18n="progress.normal">Bình thường</option>
+          </select>
+        </label>
+      </section>
+    </section>
+
+    <nav class="bottom-tabs" aria-label="Main navigation">
+      <button class="tab-btn active" data-tab-target="home" type="button"><span>⌂</span><b data-i18n="tabs.home">Trang chủ</b></button>
+      <button class="tab-btn" data-tab-target="preview" type="button"><span>◐</span><b data-i18n="tabs.preview">Xem nhanh</b></button>
+      <button class="tab-btn" data-tab-target="flashcards" type="button"><span>▣</span><b data-i18n="tabs.cards">Thẻ nhớ</b></button>
+      <button class="tab-btn" data-tab-target="quiz" type="button"><span>?</span><b data-i18n="tabs.quiz">Kiểm tra</b></button>
+      <button class="tab-btn" data-tab-target="progress" type="button"><span>≡</span><b data-i18n="tabs.progress">Tiến độ</b></button>
+    </nav>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
